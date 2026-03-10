@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>侯夫人与杀猪刀 · 人物权谋图</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5eed8;
+    --aged: #e8dbb8;
+    --gold: #c9993a;
+    --gold-light: #e8c46a;
+    --red: #8b1a1a;
+    --red-light: #c0392b;
+    --jade: #2d6e5a;
+    --jade-light: #4a9475;
+    --blue: #1a3a6e;
+    --blue-light: #2c5aa0;
+    --purple: #5a1a6e;
+    --shadow: rgba(26,18,8,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(201,153,58,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,26,26,0.06) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9993a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '❧';
+    position: absolute; top: 1rem; left: 2rem;
+    font-size: 2rem; color: var(--gold); opacity: 0.4;
+  }
+  header::after {
+    content: '❧';
+    position: absolute; top: 1rem; right: 2rem;
+    font-size: 2rem; color: var(--gold); opacity: 0.4;
+    transform: scaleX(-1);
+  }
+  h1 {
+    font-size: 2.8rem; font-weight: 900;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--red) 50%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    margin-bottom: 0.4rem;
+  }
+  .subtitle {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.9rem; color: #7a6a50; letter-spacing: 0.3em;
+  }
+  .author { font-size: 0.85rem; color: var(--gold); margin-top: 0.3rem; letter-spacing: 0.15em; }
+
+  /* ── Navigation ── */
+  nav {
+    display: flex; justify-content: center; gap: 0;
+    background: var(--aged);
+    border-bottom: 1px solid rgba(201,153,58,0.3);
+    flex-wrap: wrap;
+  }
+  nav button {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.95rem; letter-spacing: 0.1em;
+    padding: 0.9rem 1.8rem;
+    background: none; border: none; cursor: pointer;
+    color: #6a5a40; transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+    position: relative;
+  }
+  nav button:hover { color: var(--ink); background: rgba(201,153,58,0.1); }
+  nav button.active {
+    color: var(--red); font-weight: 700;
+    border-bottom-color: var(--red);
+  }
+
+  /* ── Sections ── */
+  section { display: none; padding: 2.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  section.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Chapter Title ── */
+  .chapter-title {
+    text-align: center; margin-bottom: 2rem;
+    font-size: 1.4rem; color: var(--ink);
+    display: flex; align-items: center; gap: 1rem;
+    justify-content: center;
+  }
+  .chapter-title::before, .chapter-title::after {
+    content: ''; flex: 1; max-width: 120px;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .chapter-title::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  /* ── Relationship Map ── */
+  .map-container {
+    position: relative;
+    background: linear-gradient(135deg, #fdf8ed 0%, #f0e6c8 100%);
+    border: 1px solid rgba(201,153,58,0.3);
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px var(--shadow), inset 0 0 80px rgba(201,153,58,0.05);
+    overflow: hidden;
+    min-height: 700px;
+  }
+
+  svg.relation-svg {
+    width: 100%; height: 680px;
+    overflow: visible;
+  }
+
+  /* character nodes */
+  .char-node { cursor: pointer; transition: transform 0.2s; }
+  .char-node:hover { transform-origin: center; }
+
+  .char-circle {
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+    transition: all 0.3s;
+  }
+  .char-node:hover .char-circle {
+    filter: drop-shadow(0 6px 20px rgba(0,0,0,0.4));
+  }
+
+  .char-label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px; font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+  .char-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 10px; font-weight: 400;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .relation-line { transition: opacity 0.3s; }
+  .relation-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 9.5px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    justify-content: center; margin-top: 1.5rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #6a5a40; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 28px; height: 2px; flex-shrink: 0; }
+
+  /* ── Faction Cards ── */
+  .faction-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 1rem;
+  }
+  .faction-card {
+    background: linear-gradient(135deg, #fdf8ed 0%, #f5eccc 100%);
+    border: 1px solid rgba(201,153,58,0.25);
+    border-radius: 4px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px var(--shadow);
+    position: relative; overflow: hidden;
+  }
+  .faction-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .faction-card.red::before { background: var(--red); }
+  .faction-card.gold::before { background: var(--gold); }
+  .faction-card.jade::before { background: var(--jade); }
+  .faction-card.blue::before { background: var(--blue); }
+  .faction-card.purple::before { background: var(--purple); }
+
+  .faction-name {
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .faction-badge {
+    font-size: 0.7rem; font-family: 'Noto Sans SC', sans-serif;
+    padding: 0.15rem 0.5rem; border-radius: 2px;
+    font-weight: 400; letter-spacing: 0.05em;
+  }
+  .badge-red { background: var(--red); color: white; }
+  .badge-gold { background: var(--gold); color: white; }
+  .badge-jade { background: var(--jade); color: white; }
+  .badge-blue { background: var(--blue); color: white; }
+  .badge-purple { background: var(--purple); color: white; }
+
+  .faction-desc { font-size: 0.82rem; color: #6a5a40; margin-bottom: 1rem; line-height: 1.7; font-family: 'Noto Sans SC', sans-serif; }
+
+  .member-list { list-style: none; }
+  .member-list li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.45rem 0; border-bottom: 1px solid rgba(201,153,58,0.12);
+    font-size: 0.85rem;
+  }
+  .member-list li:last-child { border-bottom: none; }
+  .member-name { font-weight: 600; min-width: 70px; flex-shrink: 0; }
+  .member-role { color: #7a6a50; font-size: 0.8rem; font-family: 'Noto Sans SC', sans-serif; line-height: 1.5; }
+
+  /* ── Analysis ── */
+  .analysis-section { margin-bottom: 2.5rem; }
+  .analysis-section h3 {
+    font-size: 1.15rem; color: var(--red);
+    border-left: 4px solid var(--gold); padding-left: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .analysis-section p, .analysis-section li {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.9rem; line-height: 1.9; color: #3a2e1a; margin-bottom: 0.6rem;
+  }
+  .analysis-section ul { list-style: none; padding-left: 0; }
+  .analysis-section ul li::before { content: '◆ '; color: var(--gold); font-size: 0.7em; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(139,26,26,0.05), rgba(201,153,58,0.08));
+    border: 1px solid rgba(139,26,26,0.2);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.88rem; line-height: 1.8; color: #3a2e1a;
+  }
+  .highlight-box strong { color: var(--red); }
+
+  .timeline {
+    position: relative; padding-left: 2rem;
+    border-left: 2px solid rgba(201,153,58,0.4);
+    margin: 1rem 0;
+  }
+  .timeline-item { margin-bottom: 1.2rem; position: relative; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -2.4rem; top: 0.4rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--parchment);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .timeline-label {
+    font-size: 0.78rem; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 0.2rem;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  .timeline-text {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.88rem; line-height: 1.7; color: #3a2e1a;
+  }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed;
+    background: rgba(26,18,8,0.92);
+    color: #f5eed8;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.82rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    max-width: 200px;
+    line-height: 1.5;
+    z-index: 9999;
+    border: 1px solid var(--gold);
+  }
+
+  /* scroll */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--aged); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="tooltip"></div>
+
+<header>
+  <h1>侯夫人与杀猪刀</h1>
+  <div class="subtitle">人物关系 · 权谋脉络 · 势力格局</div>
+  <div class="author">作者：团子来袭（逐玉）</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showSection('map')">人物关系图</button>
+  <button onclick="showSection('factions')">势力阵营</button>
+  <button onclick="showSection('analysis')">战争权谋分析</button>
+</nav>
+
+<!-- ① 关系图 -->
+<section id="map" class="active">
+  <div class="chapter-title">主要人物关系网络</div>
+  <div class="map-container">
+    <svg class="relation-svg" id="svg" viewBox="0 0 900 670">
+      <defs>
+        <marker id="arrow-love" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#c0392b" opacity="0.8"/>
+        </marker>
+        <marker id="arrow-ally" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#4a9475" opacity="0.8"/>
+        </marker>
+        <marker id="arrow-enemy" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#8b1a1a" opacity="0.8"/>
+        </marker>
+        <marker id="arrow-kin" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#c9993a" opacity="0.8"/>
+        </marker>
+        <radialGradient id="grad-red" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#c0392b"/>
+          <stop offset="100%" stop-color="#6b0e0e"/>
+        </radialGradient>
+        <radialGradient id="grad-gold" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#e8c46a"/>
+          <stop offset="100%" stop-color="#9a7020"/>
+        </radialGradient>
+        <radialGradient id="grad-jade" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#4a9475"/>
+          <stop offset="100%" stop-color="#1e4f3c"/>
+        </radialGradient>
+        <radialGradient id="grad-blue" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#2c5aa0"/>
+          <stop offset="100%" stop-color="#0f2550"/>
+        </radialGradient>
+        <radialGradient id="grad-purple" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#8a3aac"/>
+          <stop offset="100%" stop-color="#3d0f5a"/>
+        </radialGradient>
+        <radialGradient id="grad-grey" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#8a7a60"/>
+          <stop offset="100%" stop-color="#4a3a28"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ===== LINES ===== -->
+      <!-- 主线：樊长玉 ↔ 谢征 (love) -->
+      <line x1="450" y1="200" x2="450" y2="340" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="none" opacity="0.9" marker-end="url(#arrow-love)" class="relation-line"/>
+      <text x="470" y="273" class="relation-label" fill="#c0392b">夫妻·相爱</text>
+
+      <!-- 谢征 ← 魏严 (养育/控制) -->
+      <line x1="280" y1="210" x2="390" y2="350" stroke="#8b1a1a" stroke-width="2" opacity="0.7" marker-end="url(#arrow-enemy)" class="relation-line"/>
+      <text x="310" y="290" class="relation-label" fill="#8b1a1a">养育·利用</text>
+
+      <!-- 谢征 ← 谢临山 (父子) -->
+      <line x1="160" y1="220" x2="390" y2="355" stroke="#c9993a" stroke-width="2" opacity="0.75" marker-end="url(#arrow-kin)" class="relation-line"/>
+      <text x="248" y="275" class="relation-label" fill="#a07020">生父</text>
+
+      <!-- 魏严 ← 谢临山 (旧友/兄弟情→背叛) -->
+      <line x1="200" y1="200" x2="265" y2="205" stroke="#8b1a1a" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6" class="relation-line"/>
+      <text x="232" y="192" class="relation-label" fill="#8b1a1a">旧友→出卖</text>
+
+      <!-- 谢征 ← 贺敬元 (效忠) -->
+      <line x1="150" y1="450" x2="395" y2="390" stroke="#4a9475" stroke-width="1.8" opacity="0.7" marker-end="url(#arrow-ally)" class="relation-line"/>
+      <text x="255" y="438" class="relation-label" fill="#2d6e5a">归附·忠诚</text>
+
+      <!-- 谢征 ← 公孙鄞 (军师) -->
+      <line x1="260" y1="500" x2="400" y2="410" stroke="#4a9475" stroke-width="1.8" opacity="0.7" marker-end="url(#arrow-ally)" class="relation-line"/>
+      <text x="305" y="475" class="relation-label" fill="#2d6e5a">军师</text>
+
+      <!-- 谢征 ← 陶太傅 (教导) -->
+      <line x1="155" y1="330" x2="390" y2="360" stroke="#c9993a" stroke-width="1.8" opacity="0.7" marker-end="url(#arrow-kin)" class="relation-line"/>
+      <text x="248" y="335" class="relation-label" fill="#9a7020">义父·谋士</text>
+
+      <!-- 谢征 vs 魏宣 (对立) -->
+      <line x1="285" y1="320" x2="395" y2="360" stroke="#8b1a1a" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.65" class="relation-line"/>
+      <text x="322" y="333" class="relation-label" fill="#8b1a1a">政敌</text>
+
+      <!-- 魏严 ← 魏宣 (父子) -->
+      <line x1="285" y1="295" x2="285" y2="230" stroke="#c9993a" stroke-width="1.8" opacity="0.7" marker-end="url(#arrow-kin)" class="relation-line"/>
+      <text x="300" y="262" class="relation-label" fill="#a07020">父子</text>
+
+      <!-- 谢征 vs 随元淮 (对立) -->
+      <line x1="608" y1="335" x2="513" y2="360" stroke="#8b1a1a" stroke-width="1.8" stroke-dasharray="4,3" opacity="0.7" class="relation-line"/>
+      <text x="566" y="340" class="relation-label" fill="#8b1a1a">对立·博弈</text>
+
+      <!-- 随元淮 vs 魏严 (相互利用) -->
+      <line x1="610" y1="300" x2="310" y2="210" stroke="#8b1a1a" stroke-width="1.3" stroke-dasharray="6,3" opacity="0.5" class="relation-line"/>
+      <text x="468" y="242" class="relation-label" fill="#8b1a1a">相互利用</text>
+
+      <!-- 随元淮 vs 李怀安 (盟友→各怀鬼胎) -->
+      <line x1="660" y1="340" x2="720" y2="420" stroke="#4a9475" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6" class="relation-line"/>
+      <text x="705" y="376" class="relation-label" fill="#2d6e5a">暂时结盟</text>
+
+      <!-- 樊长玉 ← 长宁 (姐妹) -->
+      <line x1="450" y1="175" x2="560" y2="130" stroke="#c9993a" stroke-width="2" opacity="0.75" marker-end="url(#arrow-kin)" class="relation-line"/>
+      <text x="516" y="143" class="relation-label" fill="#a07020">姐妹</text>
+
+      <!-- 樊长玉 ← 陶太傅 (义父) -->
+      <line x1="155" y1="315" x2="405" y2="185" stroke="#c9993a" stroke-width="1.8" opacity="0.6" marker-end="url(#arrow-kin)" class="relation-line"/>
+      <text x="260" y="225" class="relation-label" fill="#9a7020">义父</text>
+
+      <!-- 樊长玉 ← 宋砚 (退婚·旧情) -->
+      <line x1="580" y1="220" x2="490" y2="185" stroke="#8a7a60" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5" class="relation-line"/>
+      <text x="543" y="196" class="relation-label" fill="#8a7a60">退婚</text>
+
+      <!-- 谢征 ← 谢忠 (老仆) -->
+      <line x1="370" y1="500" x2="410" y2="415" stroke="#4a9475" stroke-width="1.5" opacity="0.6" class="relation-line"/>
+      <text x="384" y="460" class="relation-label" fill="#2d6e5a">心腹老仆</text>
+
+      <!-- 贺敬元 vs 魏宣 -->
+      <line x1="185" y1="440" x2="270" y2="325" stroke="#8b1a1a" stroke-width="1.3" stroke-dasharray="4,3" opacity="0.5" class="relation-line"/>
+      <text x="210" y="375" class="relation-label" fill="#8b1a1a">对立</text>
+
+      <!-- 魏祁林/樊二牛 ← 魏严 -->
+      <line x1="310" y1="210" x2="570" y2="555" stroke="#c9993a" stroke-width="1.3" stroke-dasharray="5,4" opacity="0.45" class="relation-line"/>
+      <text x="460" y="395" class="relation-label" fill="#a07020">死士出身</text>
+
+      <!-- 樊长玉 ← 孟叔远/父母 -->
+      <line x1="618" y1="560" x2="490" y2="195" stroke="#c9993a" stroke-width="1.3" stroke-dasharray="5,4" opacity="0.4" class="relation-line"/>
+      <text x="575" y="380" class="relation-label" fill="#9a7020">真实血脉</text>
+
+      <!-- ===== NODES ===== -->
+
+      <!-- 樊长玉 (主角) -->
+      <g class="char-node" data-info="女主角。杀猪女，实为孟老将军外孙女。天生武力，救谢征于雪地，后假赘婿变真夫妻，代夫出征，成长为蓟州将领。">
+        <circle cx="450" cy="185" r="46" fill="url(#grad-red)" class="char-circle" filter="url(#glow)"/>
+        <circle cx="450" cy="185" r="46" fill="none" stroke="#e8c46a" stroke-width="2" opacity="0.6"/>
+        <text x="450" y="180" class="char-label" fill="white">樊长玉</text>
+        <text x="450" y="196" class="char-title" fill="#ffd">女主·屠户女</text>
+      </g>
+
+      <!-- 谢征 (男主) -->
+      <g class="char-node" data-info="男主角。武安侯，战功赫赫，西北大将。真实身份：护国大将军谢临山之子，被魏严养大。后知真相，誓要扳倒魏严。">
+        <circle cx="450" cy="375" r="46" fill="url(#grad-blue)" class="char-circle" filter="url(#glow)"/>
+        <circle cx="450" cy="375" r="46" fill="none" stroke="#e8c46a" stroke-width="2" opacity="0.6"/>
+        <text x="450" y="370" class="char-label" fill="white">谢征</text>
+        <text x="450" y="386" class="char-title" fill="#adf">男主·武安侯</text>
+      </g>
+
+      <!-- 魏严 -->
+      <g class="char-node" data-info="当朝宰相，把持朝政十余载。养育谢征为己用，实为杀害谢临山的幕后黑手。权欲极大，同时又对亡妹（谢征之母）有私情。">
+        <circle cx="290" cy="210" r="38" fill="url(#grad-purple)" class="char-circle"/>
+        <circle cx="290" cy="210" r="38" fill="none" stroke="#e8c46a" stroke-width="1.5" opacity="0.5"/>
+        <text x="290" y="206" class="char-label" fill="white">魏严</text>
+        <text x="290" y="221" class="char-title" fill="#ddf">当朝宰相</text>
+      </g>
+
+      <!-- 魏宣 -->
+      <g class="char-node" data-info="魏严之子，跋扈横行，视谢征为眼中钉。曾接管徽州兵权，大公子党羽骨干，与贺敬元多次正面冲突。">
+        <circle cx="285" cy="325" r="33" fill="url(#grad-purple)" class="char-circle" opacity="0.85"/>
+        <text x="285" y="321" class="char-label" fill="white">魏宣</text>
+        <text x="285" y="335" class="char-title" fill="#ddf">魏严之子</text>
+      </g>
+
+      <!-- 谢临山 -->
+      <g class="char-node" data-info="护国大将军，谢征生父。随承德太子亲征锦州，万箭穿心仍拄旗不倒，站着死去。后被揭露遭到暗算，死于锦州之战的阴谋。">
+        <circle cx="155" cy="210" r="33" fill="url(#grad-gold)" class="char-circle"/>
+        <text x="155" y="206" class="char-label" fill="white">谢临山</text>
+        <text x="155" y="220" class="char-title" fill="#220">护国大将军</text>
+      </g>
+
+      <!-- 陶太傅 -->
+      <g class="char-node" data-info="朝中太傅，谢征旧时老师，后成为樊长玉义父。深谙权谋，暗中布局，辅助谢征和樊长玉对抗魏严势力。">
+        <circle cx="140" cy="330" r="32" fill="url(#grad-gold)" class="char-circle"/>
+        <text x="140" y="326" class="char-label" fill="white">陶太傅</text>
+        <text x="140" y="340" class="char-title" fill="#220">老谋深算</text>
+      </g>
+
+      <!-- 贺敬元 -->
+      <g class="char-node" data-info="蓟州节度使，刚直清廉，甚得民心。知晓樊家夫妇真实身份的秘密。最终将蓟州虎符交给谢征，彻底归附。">
+        <circle cx="150" cy="455" r="32" fill="url(#grad-jade)" class="char-circle"/>
+        <text x="150" y="451" class="char-label" fill="white">贺敬元</text>
+        <text x="150" y="465" class="char-title" fill="#dfd">蓟州节度使</text>
+      </g>
+
+      <!-- 公孙鄞 -->
+      <g class="char-node" data-info="谢征麾下军师，机智多谋，被称为"狗头军师"，是谢征最重要的智谋助手，协助谢征分析天下局势。">
+        <circle cx="258" cy="510" r="30" fill="url(#grad-jade)" class="char-circle"/>
+        <text x="258" y="506" class="char-label" fill="white">公孙鄞</text>
+        <text x="258" y="519" class="char-title" fill="#dfd">军师</text>
+      </g>
+
+      <!-- 谢忠 -->
+      <g class="char-node" data-info="谢征心腹老仆，忠心耿耿，是谢征在乱世中少数完全信任的人之一。">
+        <circle cx="370" cy="510" r="28" fill="url(#grad-jade)" class="char-circle" opacity="0.85"/>
+        <text x="370" y="506" class="char-label" fill="white">谢忠</text>
+        <text x="370" y="519" class="char-title" fill="#dfd">心腹老仆</text>
+      </g>
+
+      <!-- 随元淮 (长信王) -->
+      <g class="char-node" data-info="长信王，在崇州举兵叛乱。东宫大火中逃出的皇长孙，病弱却极有心机，与李家暂时结盟，是谢征的重要对手之一。">
+        <circle cx="640" cy="330" r="36" fill="url(#grad-red)" class="char-circle" opacity="0.85"/>
+        <circle cx="640" cy="330" r="36" fill="none" stroke="#e8c46a" stroke-width="1.5" opacity="0.4"/>
+        <text x="640" y="326" class="char-label" fill="white">随元淮</text>
+        <text x="640" y="341" class="char-title" fill="#fdd">长信王·叛军</text>
+      </g>
+
+      <!-- 李怀安 (李党) -->
+      <g class="char-node" data-info="李家代表人物，李党骨干。以扳倒魏严为目标，与随元淮暂时结盟，争夺崇州、蓟州兵权，是朝堂第三势力。">
+        <circle cx="738" cy="440" r="30" fill="url(#grad-blue)" class="char-circle" opacity="0.8"/>
+        <text x="738" y="436" class="char-label" fill="white">李怀安</text>
+        <text x="738" y="449" class="char-title" fill="#adf">李党骨干</text>
+      </g>
+
+      <!-- 长宁 -->
+      <g class="char-node" data-info="樊长玉的幼妹，五岁，天真懵懂，被随元淮掳走作为要挟筹码。是樊长玉最重要的保护对象。">
+        <circle cx="575" cy="118" r="28" fill="url(#grad-gold)" class="char-circle"/>
+        <text x="575" y="114" class="char-label" fill="white">长宁</text>
+        <text x="575" y="127" class="char-title" fill="#220">樊长玉幼妹</text>
+      </g>
+
+      <!-- 宋砚 -->
+      <g class="char-node" data-info="樊长玉的竹马，考中举人后攀高嫌贫，借算命退婚，是推动樊长玉命运转折的关键人物（负面）。">
+        <circle cx="600" cy="215" r="26" fill="url(#grad-grey)" class="char-circle" opacity="0.8"/>
+        <text x="600" y="211" class="char-label" fill="white">宋砚</text>
+        <text x="600" y="224" class="char-title" fill="#ddd">退婚举人</text>
+      </g>
+
+      <!-- 魏祁林/樊二牛 -->
+      <g class="char-node" data-info="魏家死士出身，后得孟老将军赏识入赘孟家，化名樊二牛。是樊长玉的"父亲"，其真实身份与锦州之战大阴谋密切相关。">
+        <circle cx="618" cy="570" r="30" fill="url(#grad-grey)" class="char-circle" opacity="0.75"/>
+        <text x="618" y="566" class="char-label" fill="white">魏祁林</text>
+        <text x="618" y="579" class="char-title" fill="#ddd">樊二牛·隐藏线</text>
+      </g>
+
+      <!-- 孟叔远 -->
+      <g class="char-node" data-info="谢临山麾下老将，独女嫁给魏祁林（即樊二牛）。孟老将军之女便是樊长玉的养母，揭示了樊长玉的真实血统来源。">
+        <circle cx="740" cy="570" r="28" fill="url(#grad-gold)" class="char-circle" opacity="0.7"/>
+        <text x="740" y="566" class="char-label" fill="white">孟叔远</text>
+        <text x="740" y="579" class="char-title" fill="#220">老将军</text>
+      </g>
+
+      <!-- 孟叔远 ← 魏祁林 -->
+      <line x1="648" y1="565" x2="715" y2="567" stroke="#c9993a" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3" class="relation-line"/>
+      <text x="681" y="556" class="relation-label" fill="#a07020">翁婿</text>
+
+      <!-- 唐培义 -->
+      <g class="char-node" data-info="贺敬元提拔起来的实打实纯臣，后任蓟州主将。忠于朝廷，不党不附，是各方争夺蓟州兵权棋局中的重要棋子。">
+        <circle cx="100" cy="570" r="27" fill="url(#grad-jade)" class="char-circle" opacity="0.7"/>
+        <text x="100" y="566" class="char-label" fill="white">唐培义</text>
+        <text x="100" y="579" class="char-title" fill="#dfd">蓟州主将</text>
+      </g>
+
+      <!-- 贺敬元 ← 唐培义 -->
+      <line x1="127" y1="562" x2="145" y2="482" stroke="#4a9475" stroke-width="1.3" opacity="0.5" marker-end="url(#arrow-ally)" class="relation-line"/>
+      <text x="124" y="523" class="relation-label" fill="#2d6e5a">提拔</text>
+
+    </svg>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#c0392b" stroke-width="2.5"/></svg>
+        爱情关系
+      </div>
+      <div class="legend-item">
+        <svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#c9993a" stroke-width="2"/></svg>
+        血缘/养育
+      </div>
+      <div class="legend-item">
+        <svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#4a9475" stroke-width="2"/></svg>
+        盟友/效忠
+      </div>
+      <div class="legend-item">
+        <svg width="28" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#8b1a1a" stroke-width="2" stroke-dasharray="5,3"/></svg>
+        对立/仇敌
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:url(#grad-red);background:#c0392b"></div> 主角
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#2c5aa0"></div> 谢家/正方
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#8a3aac"></div> 魏党
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#4a9475"></div> 盟友阵营
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#c9993a"></div> 隐藏线索
+      </div>
+    </div>
+    <p style="text-align:center;font-size:0.78rem;color:#8a7a60;margin-top:1rem;font-family:'Noto Sans SC',sans-serif;">💡 将鼠标悬停在人物上可查看详细简介</p>
+  </div>
+</section>
+
+<!-- ② 势力阵营 -->
+<section id="factions">
+  <div class="chapter-title">势力阵营格局</div>
+  <div class="faction-grid">
+
+    <div class="faction-card red">
+      <div class="faction-name">谢征阵营 <span class="faction-badge badge-red">正方核心</span></div>
+      <div class="faction-desc">以武安侯谢征为核心，目标是扳倒魏严、还父清誉、夺回失去的兵权，重振大胤朝纲。</div>
+      <ul class="member-list">
+        <li><span class="member-name">谢征</span><span class="member-role">武安侯，主帅。西北第一战将，手握"血衣骑"。身世曲折，以弱冠之年封侯。</span></li>
+        <li><span class="member-name">樊长玉</span><span class="member-role">侯夫人，女主。力大无穷，提杀猪刀上战场，代夫出征，后独掌一军。</span></li>
+        <li><span class="member-name">公孙鄞</span><span class="member-role">军师。谢征最倚重的谋士，善于借势分析各方博弈，号"狗头军师"。</span></li>
+        <li><span class="member-name">谢忠</span><span class="member-role">心腹老仆，忠心不二，帮助谢征处理机密事务。</span></li>
+        <li><span class="member-name">贺敬元</span><span class="member-role">后期归附。蓟州节度使，最终将虎符交与谢征。</span></li>
+        <li><span class="member-name">陶太傅</span><span class="member-role">幕后谋主。樊长玉义父，深知朝堂内幕，为谢征布局。</span></li>
+      </ul>
+    </div>
+
+    <div class="faction-card purple">
+      <div class="faction-name">魏严党羽 <span class="faction-badge badge-purple">权臣集团</span></div>
+      <div class="faction-desc">当朝宰相魏严把持朝政十六年，架空幼帝，拥有庞大的死士网络与政治资源，是最大的反派势力。</div>
+      <ul class="member-list">
+        <li><span class="member-name">魏严</span><span class="member-role">当朝宰相，大胤实际掌权者。养育谢征为刀，却杀害其生父谢临山。私通后妃，野心勃勃。</span></li>
+        <li><span class="member-name">魏宣</span><span class="member-role">魏严之子。接手徽州兵权，行事跋扈，曾多次设局对付谢征和贺敬元。</span></li>
+        <li><span class="member-name">魏祁林</span><span class="member-role">（樊二牛）。魏家死士出身，后入赘孟家，成为樊长玉的"父亲"，身份极为复杂。</span></li>
+        <li><span class="member-name">郑文常</span><span class="member-role">魏严在蓟州的代理，负责执行征粮等命令，后被贺敬元压制。</span></li>
+      </ul>
+    </div>
+
+    <div class="faction-card blue">
+      <div class="faction-name">叛军·崇州 <span class="faction-badge badge-blue">反叛势力</span></div>
+      <div class="faction-desc">以长信王随元淮为首，在崇州举兵造反，自称东宫大火中逃出的皇长孙，借李家之势与朝廷周旋。</div>
+      <ul class="member-list">
+        <li><span class="member-name">随元淮</span><span class="member-role">长信王，叛军首领。病弱却极有心机，以皇长孙身份为旗，图谋夺位。掳走长宁作为要挟筹码。</span></li>
+        <li><span class="member-name">赵询</span><span class="member-role">随元淮心腹，原本是联络员，后立场复杂，与兰氏等人关系微妙。</span></li>
+        <li><span class="member-name">兰氏</span><span class="member-role">随元淮亲信女官，心存善念，是随元淮身边少数有人情味的人物。</span></li>
+        <li><span class="member-name">俞浅浅</span><span class="member-role">随元淮的"俞姨娘"，性格刚毅，与儿子俞宝儿被扣押在随元淮处。</span></li>
+      </ul>
+    </div>
+
+    <div class="faction-card jade">
+      <div class="faction-name">李家党羽 <span class="faction-badge badge-jade">朝中第三势力</span></div>
+      <div class="faction-desc">以李太傅为首的朝中势力，借崇州战事坐收渔利，与随元淮暂时结盟，意图在魏严倒台后独揽朝纲。</div>
+      <ul class="member-list">
+        <li><span class="member-name">李怀安</span><span class="member-role">李家代表，在崇州担任监军，与随元淮联手构陷魏严，争夺蓟州、崇州兵权。</span></li>
+        <li><span class="member-name">李太傅</span><span class="member-role">李党核心，养了大批谋士，在朝堂与魏严长期对峙，各怀心思。</span></li>
+      </ul>
+    </div>
+
+    <div class="faction-card gold">
+      <div class="faction-name">游离势力 <span class="faction-badge badge-gold">关键配角</span></div>
+      <div class="faction-desc">不属于任何明确阵营，却对主线剧情影响深远的关键人物。</div>
+      <ul class="member-list">
+        <li><span class="member-name">唐培义</span><span class="member-role">纯臣，蓟州主将。贺敬元提拔，忠于朝廷，各方争抢拉拢的棋子。</span></li>
+        <li><span class="member-name">谢临山</span><span class="member-role">（已故）护国大将军，谢征生父。锦州之战的真相牵动全局。</span></li>
+        <li><span class="member-name">孟叔远</span><span class="member-role">（已故）老将军，独女嫁魏祁林，是樊长玉真实的外祖父家。</span></li>
+        <li><span class="member-name">陶太傅</span><span class="member-role">表面游离，实为谢征幕后大谋士，暗中推动全局布局。</span></li>
+        <li><span class="member-name">宋砚</span><span class="member-role">樊长玉竹马，考中举人后退婚，是反衬主角成长的人物。</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ③ 权谋分析 -->
+<section id="analysis">
+  <div class="chapter-title">战争与权谋深度分析</div>
+
+  <div class="analysis-section">
+    <h3>一、锦州之战——一切的起点</h3>
+    <div class="highlight-box">
+      <strong>十七年前的历史悬案</strong>是全书权谋的核心线索。承德太子亲征锦州，护国大将军谢临山万箭穿心、拄旗而死；老皇帝随后驾崩；魏严借此扶持毫无根基的幼帝（齐昇）登基，从此把持朝政十余载。
+    </div>
+    <p>谢征在长大后逐渐发现，父亲的死并非单纯的战场意外。锦州之战的真相牵涉到：</p>
+    <ul>
+      <li>魏严为了夺权，提前知晓北厥人的伏击计划却故意隐瞒（或参与谋划）</li>
+      <li>魏祁林（后化名樊二牛）在运粮一事上可能被利用，成为间接推手</li>
+      <li>那封关键的"信"成为各方争夺的核心证据，贯穿全书</li>
+      <li>贺敬元一直保守着这个秘密，知道樊家夫妇的真实身份却选择沉默</li>
+    </ul>
+  </div>
+
+  <div class="analysis-section">
+    <h3>二、三方兵权博弈——蓟崇两州争夺战</h3>
+    <p>小说最核心的政治棋局是围绕<strong>蓟州</strong>和<strong>崇州</strong>两地兵权的争夺，形成三方拉锯：</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-label">第一阶段·布局</div>
+        <div class="timeline-text">魏严夺取谢征的徽州兵权，由魏宣接管。谢征被迫蛰伏，以赘婿身份隐匿于临安镇。崇州随元淮举兵，战局僵持，朝廷粮道受阻。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">第二阶段·角力</div>
+        <div class="timeline-text">李家与随元淮结盟，意图借战事构陷魏严。谢征在蓟州重建势力，拉拢贺敬元，获得蓟州虎符。魏严则试图让蓟州战局长期僵持，以慢慢夺回控制权。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">第三阶段·决局</div>
+        <div class="timeline-text">樊长玉代夫出征，在战场上崭露头角；谢征重新披甲。李家设局引魏严入套，以"勾结叛贼"定罪。魏严私通后妃的秘密被挖出，彻底覆灭。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analysis-section">
+    <h3>三、各方势力的核心算计</h3>
+    <ul>
+      <li><strong>魏严</strong>：以"让崇州战局僵持"来消耗李家和随元淮，同时借蓟州兵权真空期重新渗透控制；用谢征这把刀镇守西北，又时刻防备谢征翻身。</li>
+      <li><strong>谢征</strong>：先蛰伏养伤积蓄力量，再借贺敬元的蓟州虎符重建军事基础，同时调查锦州旧案，积累扳倒魏严的实证，最终以"还天下百姓一个公道"为旗帜正名。</li>
+      <li><strong>随元淮</strong>：以皇长孙身份为旗帜，坐山观虎斗，既借李家之势抗衡朝廷，又绝不真正与李家合并，保持独立性。掳走长宁是他牵制谢征的重要棋子。</li>
+      <li><strong>李家</strong>：最典型的渔翁得利策略——让魏严和谢征相互消耗，让随元淮替自己打前阵，自己坐收崇州战果和朝廷大义。</li>
+      <li><strong>陶太傅</strong>：暗中下棋的老狐狸，将樊长玉收为义女，既是感情投资，也是让她掌握蓟州兵力的战略布局，为谢征留后手。</li>
+    </ul>
+  </div>
+
+  <div class="analysis-section">
+    <h3>四、樊长玉的成长弧线与权谋参与</h3>
+    <div class="highlight-box">
+      樊长玉是全书最特别的权谋参与者：她不是传统意义的谋士，而是以<strong>"力量"与"真情"</strong>打破了权谋棋局的冷酷逻辑。她用杀猪刀砍下敌将首级，用代夫出征证明了自己的价值，最终从一个被动的棋子变成了主动持刀的玩家。
+    </div>
+    <ul>
+      <li>从临安镇屠户女 → 蓟州军中实际参战者 → 独立领军将领</li>
+      <li>其真实血统（孟老将军外孙女）在权谋层面也具有重要意义：她的出现牵扯出魏祁林（樊二牛）的真实身份，进而牵出锦州旧案的完整链条</li>
+      <li>陶太傅收她为义女，表面是感情，实则也是在为谢征提供一个能在蓟州独当一面的军事盟友</li>
+    </ul>
+  </div>
+
+  <div class="analysis-section">
+    <h3>五、战争书写的核心主题</h3>
+    <ul>
+      <li><strong>权谋必须付出代价</strong>：每一场棋局背后，都是底层百姓家破人亡——清平县被屠、征粮苦民、流民被驱……贺敬元的"为大胤百姓当官"与魏宣的"拿刀逼百姓"形成鲜明对比。</li>
+      <li><strong>忠义与谎言的辩证</strong>：谢征"认贼作父十六载"是最大的悲剧。而贺敬元守着秘密沉默，既是自保，也是另一种扭曲的忠义。</li>
+      <li><strong>女性视角下的战争</strong>：全书以女主视角呈现战争，让"爱与生死"而非"权力与征服"成为战争叙事的情感核心，提杀猪刀的女人与执天下权柄的侯爷之间的对等，是作者最大的浪漫。</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  // Tab navigation
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Tooltip for SVG nodes
+  const tooltip = document.getElementById('tooltip');
+  document.querySelectorAll('.char-node').forEach(node => {
+    node.addEventListener('mouseenter', e => {
+      const info = node.dataset.info;
+      if (!info) return;
+      tooltip.textContent = info;
+      tooltip.style.opacity = '1';
+    });
+    node.addEventListener('mousemove', e => {
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top = (e.clientY - 10) + 'px';
+    });
+    node.addEventListener('mouseleave', () => {
+      tooltip.style.opacity = '0';
+    });
+  });
+</script>
+</body>
+</html>
